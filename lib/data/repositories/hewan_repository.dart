@@ -23,4 +23,10 @@ class HewanRepository {
       throw Exception("Gagal mengambil data hewan: ${response.statusCode}");
     }
   }
+
+  Future<void> createHewan(Map<String, dynamic> hewanData) async {
+    final token = await storage.getToken();
+
+    
+  }
 }
