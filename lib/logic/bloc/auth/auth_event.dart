@@ -16,3 +16,5 @@ class RegisterRequested extends AuthEvent {
   final String name, email, password;
   RegisterRequested(this.name, this.email, this.password);
 }
+
+class LogoutRequested extends AuthEvent {}
