@@ -193,7 +193,35 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
 
-                                  
+                              const SizedBox(height: 30),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "Belum punya akun?",
+                                    style: TextStyle(
+                                      color: Colors.white70,
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const RegisterPage(),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text(
+                                      "Daftar",
+                                      style: TextStyle(
+                                        color: Colors.redAccent,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )
                               ],
                             ),
                           ),
