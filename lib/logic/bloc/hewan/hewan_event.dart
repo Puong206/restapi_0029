@@ -4,3 +4,5 @@ abstract class HewanEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
+
+class FetchHewanEvent extends HewanEvent {}
