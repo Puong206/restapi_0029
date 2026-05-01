@@ -4,3 +4,5 @@ abstract class HewanState extends Equatable{
   @override
   List<Object?> get props => [];
 }
+
+class HewanInitialState extends HewanState{}
