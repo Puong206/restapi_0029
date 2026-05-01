@@ -16,3 +16,8 @@ class HewanLoaded extends HewanState{
   @override
   List<Object?> get props => [hewanList];
 }
+
+class HewanError extends HewanState{
+  final String message;
+  HewanError(this.message);
+}
