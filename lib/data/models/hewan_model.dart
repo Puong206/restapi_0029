@@ -15,5 +15,14 @@ class HewanModel {
     required this.status,
   });
 
-  
+  factory HewanModel.fromJson(Map<String, dynamic> json) {
+    return HewanModel(
+      id: json['id'],
+      nama: json['nama'],
+      jenis: json['jenis'],
+      deskripsi: json['deskripsi'],
+      harga: json['harga'],
+      status: json['status'],
+    );
+  }
 }
