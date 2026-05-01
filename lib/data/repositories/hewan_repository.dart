@@ -27,6 +27,14 @@ class HewanRepository {
   Future<void> createHewan(Map<String, dynamic> hewanData) async {
     final token = await storage.getToken();
 
-    
+    final response = await http.post(
+      Uri.parse("$_baseUrl/hewan"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(hewanData),
+    );
   }
 }
