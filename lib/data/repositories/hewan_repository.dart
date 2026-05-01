@@ -36,5 +36,10 @@ class HewanRepository {
       },
       body: jsonEncode(hewanData),
     );
+
+    if (response.statusCode != 201 && response.statusCode != 200) {
+      final data = jsonDecode(response.body);
+      throw data['message'] ?? "Gagal menambahkan hewan: ${response.statusCode}";
+    }
   }
 }
