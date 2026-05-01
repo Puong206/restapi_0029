@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restapi_0029/logic/bloc/auth/auth_bloc.dart';
+import 'package:restapi_0029/logic/bloc/auth/auth_event.dart';
 import 'package:restapi_0029/logic/bloc/auth/auth_state.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -106,7 +107,113 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           const SizedBox(height: 20),
 
-                          
+                          _buildGlassTextField(
+                            controller: _nameController,
+                            hint: "Nama Lengkap",
+                            icon: Icons.person_outline,
+                            validator: (value) {
+                              if (value == null || value.isEmpty)
+                                return "Nama tidak boleh kosong";
+                              if (value.length < 3)
+                                return "Nama harus minimal 3 karakter";
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 16),
+
+                          _buildGlassTextField(
+                            controller: _emailController,
+                            hint: "Email",
+                            icon: Icons.email_outlined,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value == null || value.isEmpty)
+                                return "Email tidak boleh kosong";
+                              if (!_isValidEmail(value))
+                                return "Format email tidak valid";
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 16),
+
+                          _buildGlassTextField(
+                            controller: _passwordController,
+                            hint: "Password",
+                            icon: Icons.lock_outline,
+                            isPassword: _obsecureText,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obsecureText
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.white70,
+                              ),
+                              onPressed: () =>
+                                setState(() => _obsecureText = !_obsecureText),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty)
+                                return "Password tidak boleh kosong";
+                              if (value.length < 6)
+                                return "Password harus minimal 6 karakter";
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 30),
+
+                          BlocBuilder<AuthBloc, AuthState>(
+                            builder: (context, state) {
+                              if (state is AuthLoading) {
+                                return const CircularProgressIndicator(
+                                  color: Colors.white,
+                                );
+                              }
+                              return SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      context.read<AuthBloc>().add(
+                                        RegisterRequested(
+                                          _nameController.text,
+                                          _emailController.text,
+                                          _passwordController.text,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.redAccent.shade400,
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 15,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    "Daftar Sekarang",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 20),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text(
+                              "Sudah punya akun? Login",
+                              style: TextStyle(
+                                color: Colors.white70,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
