@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restapi_0029/logic/bloc/auth/auth_bloc.dart';
+import 'package:restapi_0029/logic/bloc/auth/auth_event.dart';
 import 'package:restapi_0029/logic/bloc/auth/auth_state.dart';
 
 class LoginPage extends StatefulWidget {
@@ -148,6 +149,51 @@ class _LoginPageState extends State<LoginPage> {
                                   },
                                 ),
                                 const SizedBox(height: 40),
+
+                                state is AuthLoading
+                                  ? Center(
+                                    child: Lottie.asset(
+                                      'assets/loading.json',
+                                      width: 100,
+                                      height: 100,
+                                      ),
+                                    )
+                                  : SizedBox(
+                                    width: double.infinity,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          context.read<AuthBloc>().add(
+                                            LoginRequested(
+                                              _emailController.text,
+                                              _passwordController.text,
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.purple.shade700,
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 15,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: 
+                                            BorderRadius.circular(30),
+                                        ),
+                                        elevation: 5,
+                                      ),
+                                      child: const Text(
+                                        "Login",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  
                               ],
                             ),
                           ),
