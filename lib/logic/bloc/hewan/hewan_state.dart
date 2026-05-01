@@ -21,3 +21,5 @@ class HewanError extends HewanState{
   final String message;
   HewanError(this.message);
 }
+
+class HewanCreatedSuccess extends HewanState{}
