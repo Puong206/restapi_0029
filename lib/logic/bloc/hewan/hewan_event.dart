@@ -5,4 +5,5 @@ abstract class HewanEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class FetchHewanEvent extends HewanEvent {}
+class FetchHewan extends HewanEvent {}
+
