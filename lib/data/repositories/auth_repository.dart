@@ -59,5 +59,10 @@ class AuthRepository {
         'password': password,
       }),
     );
+
+    if (response.statusCode != 201 && response.statusCode != 200) {
+      final data = jsonDecode(response.body);
+      throw data['message'] ?? 'Gagal Registrasi';
+    }
   }
 }
