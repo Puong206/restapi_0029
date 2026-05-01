@@ -61,4 +61,21 @@ class HewanRepository {
       throw data['message'] ?? "Gagal memperbarui data hewan: ${response.statusCode}";
     }
   }
+
+  Future<void> deleteHewan(int id) async {
+    final token = await storage.getToken();
+
+    final response = await http.delete(
+      Uri.parse("$_baseUrl/hewan/$id"),
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 204) {
+      final data = jsonDecode(response.body);
+      throw data['message'] ?? "Gagal menghapus data hewan: ${response.statusCode}";
+    }
+  }
 }
