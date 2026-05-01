@@ -13,3 +13,5 @@ class Authenticated extends AuthState {
   final String token;
   Authenticated(this.token);
 }
+
+class Unauthenticated extends AuthState {}
