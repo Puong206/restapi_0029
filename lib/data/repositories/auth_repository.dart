@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:developer' as developer;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:restapi_0029/data/models/user_model.dart';
 
 class AuthRepository {
   final String baseUrl = "https://ternak-be-production.up.railway.app/api/v1";
@@ -14,5 +18,31 @@ class AuthRepository {
 
   Future<void> deleteToken() async {
     await _storage.delete(key: 'jwt_token');
+  }
+
+  Future<UserModel> login(String email, String password) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/auth/login'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode({'email': email, 'password': password}),
+      );
+
+      final data = jsonDecode(response.body);
+      developer.log('Response Login: ${response.body}', name: 'API');
+
+      if (response.statusCode == 200) {
+        await persistToken(data['token']);
+        return UserModel.fromJson(data['user']);
+      } else {
+        throw data['message'] ?? 'Gagal Login';
+      }
+    } catch (e) {
+      developer.log('Error Login: $e', name: 'API');
+      rethrow;
+    }
   }
 }
