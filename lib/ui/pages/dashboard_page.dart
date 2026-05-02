@@ -76,6 +76,14 @@ class DashboardPage extends StatelessWidget {
                         context.read<HewanBloc>().add(FetchHewan());
                         await Future.delayed(const Duration(seconds: 2));
                       },
+                      child: ListView.builder(
+                        padding: const EdgeInsets.fromLTRB(16, 100, 16, 100),
+                        itemCount: state.hewanList.length,
+                        itemBuilder: (context, index) {
+                          final hewan = state.hewanList[index];
+                          return _buildGlassCard(context, hewan);
+                        },
+                      ),
                       builder: (context, child, controller) {
                         return AnimatedBuilder(
                           animation: controller,
@@ -98,14 +106,6 @@ class DashboardPage extends StatelessWidget {
                               ],
                             );
                           },
-                          child: ListView.builder(
-                            padding: const EdgeInsets.fromLTRB(16, 100, 16, 100),
-                            itemCount: state.hewanList.length,
-                            itemBuilder: (context, index) {
-                              final hewan = state.hewanList[index];
-                              return _buildGlassCard(context, hewan);
-                            },
-                          ),
                         );
                       },
                     );
@@ -127,7 +127,7 @@ class DashboardPage extends StatelessWidget {
                         .read<
                             HewanBloc
                         >(),
-                    child: const AddHewanPage(),
+                    //child: const AddHewanPage(),
                   ),
                 ),
               );
@@ -162,7 +162,7 @@ class DashboardPage extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (innerContext) => BlocProvider.value(
                       value: bloc,
-                      child: EditHewanPage(hewan: hewan),
+                      //child: EditHewanPage(hewan: hewan),
                     ),
                   ),
                 );
