@@ -1,9 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:restapi_0029/logic/bloc/auth/auth_bloc.dart';
 import 'package:restapi_0029/logic/bloc/auth/auth_event.dart';
 import 'package:restapi_0029/logic/bloc/auth/auth_state.dart';
+import 'package:restapi_0029/ui/pages/dashboard_page.dart';
+import 'package:restapi_0029/ui/pages/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -39,14 +42,14 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const DashboardPage()),
-            );
+            )
           } else if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
                 backgroundColor: Colors.red,
               ),
-            );
+            )
           }
         },
         builder: (context, state) {
@@ -77,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                 Center(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: ClipRect(
+                    child: ClipRRect(
                       borderRadius: BorderRadius.circular(25),
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
@@ -149,15 +152,16 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 const SizedBox(height: 40),
 
-                                state is AuthLoading
-                                  ? Center(
+                                if (state is AuthLoading)
+                                  Center(
                                     child: Lottie.asset(
                                       'assets/loading.json',
                                       width: 100,
                                       height: 100,
-                                      ),
-                                    )
-                                  : SizedBox(
+                                    ),
+                                  )
+                                else
+                                  SizedBox(
                                     width: double.infinity,
                                     child: ElevatedButton(
                                       onPressed: () {
@@ -191,8 +195,6 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                     ),
                                   ),
-
-                              const SizedBox(height: 30),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -220,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   )
                                 ],
-                              )
+                              ),
                               ],
                             ),
                           ),
